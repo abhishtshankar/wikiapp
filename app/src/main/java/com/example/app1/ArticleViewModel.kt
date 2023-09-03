@@ -47,9 +47,9 @@ class ArticleViewModel : ViewModel() {
                         val revisions = pageData["revisions"] as List<Map<String, Any>>
                         val content = revisions[0]["*"].toString()
                         val url =
-                            "https://en.wikipedia.org/wiki/$title" // Construct the article URL
+                            "https://en.wikipedia.org/wiki/$title"
 
-                        articleList.add(Article(title, content, url)) // Initialize category as null
+                        articleList.add(Article(title, content, url))
                     }
 
                     articles.value = articleList
@@ -88,9 +88,8 @@ class ArticleViewModel : ViewModel() {
                         val revisions = pageData["revisions"] as List<Map<String, Any>>
                         val content = revisions[0]["*"].toString()
                         val url =
-                            "https://en.wikipedia.org/wiki/$title" // Construct the article URL
-
-                        articleList.add(Article(title, content, url)) // Initialize category as null
+                            "https://en.wikipedia.org/wiki/$title"
+                        articleList.add(Article(title, content, url))
                     }
 
                     articles.value = articleList
@@ -149,7 +148,7 @@ class ArticleViewModel : ViewModel() {
                         if (title != null) {
                             ImageInfo(title, url)
                         } else {
-                            null // Skip items with null titles
+                            null
                         }
                     } ?: emptyList()
 

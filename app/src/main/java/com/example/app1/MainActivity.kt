@@ -19,10 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 
-        // Initialize the toolbar
         setSupportActionBar(toolbar)
 
-        // Set the title of the toolbar
         supportActionBar?.title = "MY WIKI"
 
         viewModel = ViewModelProvider(
@@ -41,8 +39,6 @@ class MainActivity : AppCompatActivity() {
             })
         })
 
-        // Inside MainActivity onCreate method
-
         val nextButton1: Button = findViewById(R.id.next1)
         val nextButton2: Button = findViewById(R.id.next2)
         val nextButton3: Button = findViewById(R.id.next3)
@@ -58,8 +54,6 @@ class MainActivity : AppCompatActivity() {
         nextButton3.setOnClickListener {
             viewModel.loadNextArticles()
         }
-
     }
-
 }
 

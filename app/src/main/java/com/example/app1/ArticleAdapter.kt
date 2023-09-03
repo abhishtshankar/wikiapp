@@ -32,19 +32,14 @@ override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
     val article = articles[position]
     holder.titleTextView.text = article.title
 
-    // Set category based on position
     if (position < categories.size) {
         holder.categoryTextView.text = categories[position].category
     } else {
         holder.categoryTextView.text = "" // No category available
     }
-
-    // Set image based on position
     if (position < images.size) {
-        // Use Picasso to load and display the image
         Picasso.get().load(images[position].url).into(holder.imageView)
     } else {
-        // Set a default image or handle the case when no image is available
         holder.imageView.setImageResource(R.drawable.img)
     }
 
