@@ -4,14 +4,14 @@ This app uses Wikipedia API to fetch the relevant data and display the random ar
 Room/SQLite database to Store the data & support offline reading. 
 
 Tech Stacks :
-Kotlin
+Kotlin,
 MVVM architecture
 
 Libraries Used : 
 
-Room Database
-Retrofit
-Picasso
+Room Database,
+Retrofit,
+Picasso,
 Android Lifecycle
 
 ScreenShots :
