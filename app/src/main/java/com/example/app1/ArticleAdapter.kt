@@ -1,5 +1,6 @@
 package com.example.app1
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -13,13 +14,15 @@ import com.squareup.picasso.Picasso
 class ArticleAdapter(
     private var articles: List<Article>,
     private val categories: List<Category>,
-    private val images: List<ImageInfo>
-    ) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+    private val images: List<ImageInfo>,
+    private val viewModel: ArticleViewModel ,
+    private val context: Context
+) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val categoryTextView: TextView = itemView.findViewById(R.id.categoryTextView)
-        val imageView: ImageView = itemView.findViewById(R.id.imageView) // Add this line
+        val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
     }
 
@@ -35,7 +38,7 @@ override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
     if (position < categories.size) {
         holder.categoryTextView.text = categories[position].category
     } else {
-        holder.categoryTextView.text = "" // No category available
+        holder.categoryTextView.text = ""
     }
     if (position < images.size) {
         Picasso.get().load(images[position].url).into(holder.imageView)
@@ -46,6 +49,9 @@ override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
     holder.itemView.setOnClickListener {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
         it.context.startActivity(intent)
+    }
+    holder.itemView.setOnClickListener {
+        viewModel.saveArticle(article)
     }
 }    override fun getItemCount(): Int {
         return articles.size

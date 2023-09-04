@@ -1,6 +1,7 @@
 package com.example.app1
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
+import com.example.app1.ArticleViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: ArticleViewModel
@@ -19,21 +21,27 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
 
+        val historyButton: Button = findViewById(R.id.historyButton)
+        historyButton.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
         setSupportActionBar(toolbar)
 
         supportActionBar?.title = "MY WIKI"
 
         viewModel = ViewModelProvider(
             this,
-            ViewModelProvider.NewInstanceFactory()
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)
         ).get(ArticleViewModel::class.java)
+
+
 
         val recyclerView: RecyclerView = findViewById(R.id.articleRecyclerView)
         viewModel.articles.observe(this, Observer { articles ->
-            // When articles are updated, update the adapter
             viewModel.categories.observe(this, Observer { categories ->
                 viewModel.images.observe(this, Observer { images ->
-                    val adapter = ArticleAdapter(articles, categories, images)
+                    val adapter = ArticleAdapter(articles, categories, images, viewModel, this)
                     recyclerView.adapter = adapter
                 })
             })
@@ -56,4 +64,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-

@@ -1,17 +1,24 @@
 package com.example.app1
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ArticleViewModel : ViewModel() {
+class ArticleViewModel(application: Application) : AndroidViewModel(application) {
     val articles: MutableLiveData<List<Article>> = MutableLiveData()
     val categories: MutableLiveData<List<Category>> = MutableLiveData()
     val images: MutableLiveData<List<ImageInfo>> = MutableLiveData()
+
+    private val appDatabase: AppDatabase = AppDatabase.getDatabase(application)
 
     init {
         loadArticles()
@@ -40,7 +47,6 @@ class ArticleViewModel : ViewModel() {
                     val query = response.body()?.get("query") as Map<String, Any>
                     val pages = query["pages"] as Map<String, Any>
 
-                    // Extract titles and URLs and add them to the list
                     pages.entries.forEach { entry ->
                         val pageData = entry.value as Map<String, Any>
                         val title = pageData["title"].toString()
@@ -81,7 +87,6 @@ class ArticleViewModel : ViewModel() {
                     val query = response.body()?.get("query") as Map<String, Any>
                     val pages = query["pages"] as Map<String, Any>
 
-                    // Extract titles and URLs and add them to the list
                     pages.entries.forEach { entry ->
                         val pageData = entry.value as Map<String, Any>
                         val title = pageData["title"].toString()
@@ -160,5 +165,20 @@ class ArticleViewModel : ViewModel() {
                 // Handle failure
             }
         })
+    }
+
+    fun saveArticle(article: Article) {
+        val savedArticleEntity = SavedArticleEntity(
+            title = article.title,
+            content = article.content,
+            url = article.url
+        )
+        viewModelScope.launch {
+            appDatabase.savedArticleDao().insertSavedArticle(savedArticleEntity)
+        }
+    }
+
+    fun getAllSavedArticles(): LiveData<List<SavedArticleEntity>> {
+        return appDatabase.savedArticleDao().getAllSavedArticles()
     }
 }

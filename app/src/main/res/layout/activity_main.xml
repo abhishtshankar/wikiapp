@@ -22,25 +22,22 @@
             android:elevation="4dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <!-- Add a RelativeLayout for the "History" button -->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end">
 
-                <!-- Add the "History" Button inside the RelativeLayout -->
                 <Button
                     android:id="@+id/historyButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="History"
+                    android:text="Saved Article"
                     android:textColor="#FFFFFF" />
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- RecyclerView for Articles -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/articleRecyclerView"
         android:layout_width="match_parent"
@@ -50,7 +47,6 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
         tools:listitem="@layout/item_article" />
 
-    <!-- Container for Buttons -->
     <LinearLayout
         android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
