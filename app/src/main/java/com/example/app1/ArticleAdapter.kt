@@ -31,32 +31,63 @@ class ArticleAdapter(
         return ArticleViewHolder(itemView)
     }
 
-override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-    val article = articles[position]
-    holder.titleTextView.text = article.title
+//override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+//    val article = articles[position]
+//    holder.titleTextView.text = article.title
+//
+//    if (position < categories.size) {
+//        holder.categoryTextView.text = categories[position].category
+//    } else {
+//        holder.categoryTextView.text = ""
+//    }
+//    if (position < images.size) {
+//        Picasso.get().load(images[position].url).into(holder.imageView)
+//    } else {
+//        holder.imageView.setImageResource(R.drawable.img)
+//    }
+//
+//    holder.itemView.setOnClickListener {
+//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
+//        it.context.startActivity(intent)
+//    }
+//    holder.itemView.setOnClickListener {
+//    }
+//}
 
-    if (position < categories.size) {
-        holder.categoryTextView.text = categories[position].category
-    } else {
-        holder.categoryTextView.text = ""
-    }
-    if (position < images.size) {
-        Picasso.get().load(images[position].url).into(holder.imageView)
-    } else {
-        holder.imageView.setImageResource(R.drawable.img)
+    override fun onBindViewHolder(holder: ArticleAdapter.ArticleViewHolder, position: Int) {
+        val article = articles[position]
+        holder.titleTextView.text = article.title
+
+        if (position < categories.size) {
+            holder.categoryTextView.text = categories[position].category
+        } else {
+            holder.categoryTextView.text = ""
+        }
+
+        if (position < images.size) {
+            Picasso.get().load(images[position].url).into(holder.imageView)
+        } else {
+            holder.imageView.setImageResource(R.drawable.img)
+        }
+
+        // Set a single click listener to open the article using WebView
+        holder.itemView.setOnClickListener {
+            // Launch the ArticleWebViewActivity and pass the article URL
+            val intent = Intent(context, ArticleWebViewActivity::class.java)
+            intent.putExtra("article_url", article.url)
+            context.startActivity(intent)
+            viewModel.saveArticle(article)
+
+        }
     }
 
-    holder.itemView.setOnClickListener {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.url))
-        it.context.startActivity(intent)
-    }
-    holder.itemView.setOnClickListener {
-        viewModel.saveArticle(article)
-    }
-}    override fun getItemCount(): Int {
+
+    override fun getItemCount(): Int {
         return articles.size
     }
 
 }
+
+
 
 

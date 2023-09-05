@@ -23,5 +23,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".HistoryActivity"/>
+        <activity
+            android:name=".ArticleWebViewActivity"
+            android:label="ArticleWebViewActivity"
+            android:theme="@style/Base.Theme.App1" >
+        </activity>
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>
