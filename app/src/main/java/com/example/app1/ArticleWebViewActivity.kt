@@ -14,13 +14,10 @@ class ArticleWebViewActivity : AppCompatActivity() {
         val webView: WebView = findViewById(R.id.webView)
         val articleUrl = intent.getStringExtra("article_url")
 
-        // Configure the WebView settings
         webView.settings.javaScriptEnabled = true
 
-        // Create a WebViewClient to handle page navigation within the WebView
         webView.webViewClient = WebViewClient()
 
-        // Load the article URL in the WebView
         if (!articleUrl.isNullOrEmpty()) {
             webView.loadUrl(articleUrl)
         }
